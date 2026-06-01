@@ -1,0 +1,30 @@
+# 实验运行摘要
+生成时间: 2026-05-31 16:21:51
+
+## 数据资源
+- THUOCL: 6 个文件 -> THUOCL_animal.txt, THUOCL_caijing.txt, THUOCL_chengyu.txt, THUOCL_diming.txt, THUOCL_food.txt, THUOCL_it.txt
+- dict_base.txt: 95886 词
+- PKU语料: 已就绪 (1998-01-2003版-带音.txt, 9260 KB)
+- 训练语料: 10000 句
+- 合并词典规模: 96089 | MAX_LEN=7
+
+## 关键指标（歧义集）
+- ambiguity | Hybrid | 5.8953 | 0.5000
+- hybrid_jieba_win_rate = 0.0000
+- hybrid_minus_bimm_paired_win = -0.2000
+- bimm_agree_rate_ambiguity = 0.7000
+- hybrid_agree_rate_ambiguity = 0.5000
+- hybrid_agree_rate_improvement = -0.2000
+
+## 报告素材路径
+- logs/experiment_journal.txt
+- logs/phase1_dict_corpus.txt ~ phase5_hybrid_jieba.txt
+- results/segmentation/*.tsv
+- results/timing_benchmark.txt
+- results/comparison_jieba.tsv
+- results/error_analysis.txt
+- models/hmm_params.json
+
+## 说明
+- 与 jieba 一致率为弱基准（无人工 gold）
+- OOV 句中自研词典含新词时，与 jieba 切分差异可能反映词典策略不同而非绝对错误

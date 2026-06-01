@@ -1,0 +1,33 @@
+test_set	algorithm	avg_time_ms	jieba_agree_rate
+basic	FMM	0.0225	0.0000
+basic	BMM	0.0174	0.2500
+basic	BiMM	0.0289	0.2500
+basic	HMM_baseline	1.5212	0.0000
+basic	HMM_trained	23.1895	0.2500
+basic	Hybrid	0.8177	0.2500
+ambiguity	FMM	0.0223	0.6500
+ambiguity	BMM	0.0175	0.7000
+ambiguity	BiMM	0.0274	0.7000
+ambiguity	HMM_baseline	0.7370	0.0500
+ambiguity	HMM_trained	22.5424	0.2500
+ambiguity	Hybrid	5.8953	0.5000
+oov	FMM	0.0486	0.0000
+oov	BMM	0.0470	0.0000
+oov	BiMM	0.0375	0.0000
+oov	HMM_baseline	1.5241	0.0667
+oov	HMM_trained	24.9948	0.1333
+oov	Hybrid	3.4471	0.4000
+long	FMM	0.0876	0.0000
+long	BMM	0.0616	0.0000
+long	BiMM	0.1109	0.0000
+long	HMM_baseline	2.6513	0.0000
+long	HMM_trained	24.9933	0.1000
+long	Hybrid	6.3087	0.1000
+
+# 歧义集 Hybrid 相对 BiMM（相对 jieba 一致率）
+hybrid_jieba_win_rate	0.0000
+bimm_jieba_win_rate	0.2000
+hybrid_minus_bimm_paired_win	-0.2000
+bimm_agree_rate_ambiguity	0.7000
+hybrid_agree_rate_ambiguity	0.5000
+hybrid_agree_rate_improvement	-0.2000

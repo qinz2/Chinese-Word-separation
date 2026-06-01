@@ -1,0 +1,155 @@
+"""三层混合：Layer0 实体预处理 -> Layer1 BiMM(词典最长匹配) -> Layer2 HMM(长未登录串) -> Layer3 实体规则。"""
+from __future__ import annotations
+
+import re
+from typing import Any
+
+from .bimm import bimm
+from .hmm import segment as hmm_segment
+from .rules import merge_entities, RE_DATE, RE_ENGLISH, RE_ARABIC_NUM, RE_CN_NUM
+
+
+def _pre_extract_entities(sentence: str) -> list[tuple[str, str]]:
+    """Layer0 预处理：提取英文/数字/日期实体，返回[(类型, 文本), ...]"""
+    spans = []
+    for pat in (RE_DATE, RE_ENGLISH, RE_ARABIC_NUM, RE_CN_NUM):
+        for m in pat.finditer(sentence):
+            spans.append((m.start(), m.end()))
+    
+    if not spans:
+        return [("chinese", sentence)]
+    
+    # 合并重叠区间
+    spans.sort()
+    merged = [spans[0]]
+    for s, e in spans[1:]:
+        if s >= merged[-1][1]:
+            merged.append((s, e))
+        elif e > merged[-1][1]:
+            merged[-1] = (merged[-1][0], e)
+    
+    result = []
+    pos = 0
+    for s, e in merged:
+        if s > pos:
+            result.append(("chinese", sentence[pos:s]))
+        result.append(("entity", sentence[s:e]))
+        pos = e
+    if pos < len(sentence):
+        result.append(("chinese", sentence[pos:]))
+    return result
+
+
+def _can_split_into_subwords(word: str, dictionary: set[str], max_len: int) -> bool:
+    """检查一个词是否可以拆分为多个已知子词（贪心匹配，排除整词）"""
+    if len(word) <= 3:
+        return False
+    
+    # 贪心匹配：尝试从最长可能子词开始匹配（但不超过len(word)-1，避免匹配整词）
+    pos = 0
+    subword_count = 0
+    while pos < len(word):
+        matched = False
+        # 从最长可能长度开始尝试，但不超过剩余长度-1（避免匹配整词）
+        max_try_len = min(max_len, len(word) - pos)
+        if pos == 0 and len(word) <= max_len:
+            max_try_len = len(word) - 1  # 第一次尝试时不匹配整词
+        
+        for length in range(max_try_len, 0, -1):
+            subword = word[pos:pos + length]
+            if subword in dictionary:
+                pos += length
+                subword_count += 1
+                matched = True
+                break
+        if not matched:
+            return False  # 无法完全拆分
+    
+    # 只有当能拆分为2个或以上子词时才返回True
+    return subword_count >= 2
+
+
+def _layer2_process(
+    words: list[str],
+    dictionary: set[str],
+    max_len: int,
+    hmm_params: dict[str, Any],
+) -> list[str]:
+    """Layer2: 对BiMM结果中的连续未登录单字启用HMM，并对可拆分的长词强制HMM"""
+    refined: list[str] = []
+    i = 0
+    while i < len(words):
+        w = words[i]
+        
+        # 新增：对长度>3的词，检查是否可拆分为多个子词
+        if len(w) > 3 and _can_split_into_subwords(w, dictionary, max_len):
+            # 强制触发HMM重新切分
+            refined.extend(hmm_segment(w, hmm_params))
+            i += 1
+        elif len(w) == 1 and w not in dictionary:
+            buf = w
+            i += 1
+            while i < len(words) and len(words[i]) == 1 and words[i] not in dictionary:
+                buf += words[i]
+                i += 1
+            # 仅在长度>=3时启用HMM（避免短串被切碎）
+            if len(buf) >= 3:
+                refined.extend(hmm_segment(buf, hmm_params))
+            else:
+                refined.append(buf)
+        else:
+            refined.append(w)
+            i += 1
+    return refined
+
+
+def hybrid_segment(
+    sentence: str,
+    dictionary: set[str],
+    max_len: int,
+    hmm_params: dict[str, Any],
+) -> list[str]:
+    """
+    新流程：
+    Layer0：预处理 - 提取英文/数字/日期实体（保护不被BiMM切碎）
+    Layer1：BiMM - 只处理剩余中文片段
+    Layer2：HMM - 对连续未登录单字再切分
+    Layer3：后处理 - 合并相邻实体
+    """
+    # Layer0: 先用规则提取英文/数字/日期，得到span信息
+    segments = _pre_extract_entities(sentence)
+    
+    # Layer1+2: 对每个中文片段进行BiMM+HMM处理
+    refined: list[str] = []
+    for seg_type, seg_text in segments:
+        if seg_type == "entity":
+            refined.append(seg_text)  # 直接保留实体
+        else:
+            words = bimm(seg_text, dictionary, max_len)
+            # Layer2: HMM处理连续未登录单字
+            refined.extend(_layer2_process(words, dictionary, max_len, hmm_params))
+    
+    # Layer3: 后处理合并
+    return merge_entities(refined)
+
+
+def fmm_with_spans(
+    sentence: str, dictionary: set[str], max_len: int
+) -> list[tuple[str, bool]]:
+    """保留 FMM 块格式 API，供实验对比 Layer1 FMM 行为。"""
+    from .fmm import fmm
+
+    words = fmm(sentence, dictionary, max_len)
+    spans: list[tuple[str, bool]] = []
+    oov_buf = ""
+    for w in words:
+        if len(w) == 1 and w not in dictionary:
+            oov_buf += w
+        else:
+            if oov_buf:
+                spans.append((oov_buf, False))
+                oov_buf = ""
+            spans.append((w, True))
+    if oov_buf:
+        spans.append((oov_buf, False))
+    return spans
