@@ -1,3 +1,3 @@
-[2026-05-31 16:21:37] | PHASE=1 | TASK=build_dict | dict_base 生成完成 | 词数=95886 | 来源=['THUOCL:95886'] | 路径=E:\自然语言处理\大作业\data\dict\dict_base.txt
-[2026-05-31 16:21:39] | PHASE=1 | TASK=prepare_corpus | 训练语料 | 1998-01-2003版-带音.txt_random_sample n=10000 | 句数=10000 | 输出=E:\自然语言处理\大作业\data\corpus\train_corpus.txt
-[2026-05-31 16:21:41] | PHASE=1 | TASK=prepare_corpus | 训练语料 | 1998-01-2003版-带音.txt_random_sample n=10000 | 句数=10000 | 输出=E:\自然语言处理\大作业\data\corpus\train_corpus.txt
+[2026-06-02 17:14:28] | PHASE=1 | TASK=build_dict | dict_base 生成完成 | 词数=95886 | 来源=['THUOCL:95886'] | 路径=E:\自然语言处理\大作业\data\dict\dict_base.txt
+[2026-06-02 17:14:30] | PHASE=1 | TASK=prepare_corpus | 训练语料 | 1998-01-2003版-带音.txt_random_sample n=10000 | 句数=10000 | 输出=E:\自然语言处理\大作业\data\corpus\train_corpus.txt
+[2026-06-02 17:14:32] | PHASE=1 | TASK=prepare_corpus | 训练语料 | 1998-01-2003版-带音.txt_random_sample n=10000 | 句数=10000 | 输出=E:\自然语言处理\大作业\data\corpus\train_corpus.txt

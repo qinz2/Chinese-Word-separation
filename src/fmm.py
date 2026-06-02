@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 
-def fmm(sentence: str, dictionary: set[str], max_len: int) -> list[str]:
+def fmm(sentence: str, dictionary: dict[str, int], max_len: int) -> list[str]:
     result: list[str] = []
     index = 0
     n = len(sentence)

@@ -4,6 +4,8 @@ from __future__ import annotations
 import re
 
 RE_ARABIC_NUM = re.compile(r"\d+(?:\.\d+)?")
+
+# 日期规则（放在最前面，优先级最高）
 RE_DATE = re.compile(
     r"\d{4}年\d{1,2}月\d{1,2}日|"
     r"\d{4}年\d{1,2}月|"
@@ -11,10 +13,21 @@ RE_DATE = re.compile(
     r"\d{4}-\d{1,2}-\d{1,2}|"
     r"\d{4}/\d{1,2}/\d{1,2}"
 )
-RE_ENGLISH = re.compile(r"[A-Za-z][A-Za-z0-9+#]*")
+
+# 英文规则（其次）
+RE_ENGLISH = re.compile(r"[A-Za-z][A-Za-z0-9+#_@.]*")
+
+# 中文数字规则（扩展支持更多表达）
+# 支持：零一二三四五六七八九十百千万亿〇两壹贰叁肆伍陆柒捌玖拾佰仟萬亿
+# 支持：成（如五成）、倍、分之（如三分之一）、点（如三点五）
 RE_CN_NUM = re.compile(
     r"[零一二三四五六七八九十百千万亿〇两壹贰叁肆伍陆柒捌玖拾佰仟萬亿]+"
+    r"(?:(?:[成倍分])|(?:分之[零一二三四五六七八九十百千万亿〇两壹贰叁肆伍陆柒捌玖拾佰仟萬亿]+))?"
+    r"(?:点[零一二三四五六七八九十]+)?"
 )
+
+# 混合实体规则（最后匹配，避免与日期冲突）
+RE_MIXED = re.compile(r"[A-Za-z0-9]+(?:[年月日时分秒])?")
 
 
 def _merge_spans(spans: list[tuple[int, int]]) -> list[tuple[int, int]]:
@@ -32,7 +45,9 @@ def _merge_spans(spans: list[tuple[int, int]]) -> list[tuple[int, int]]:
 
 def _collect_spans(text: str) -> list[tuple[int, int]]:
     spans: list[tuple[int, int]] = []
-    for pat in (RE_DATE, RE_ENGLISH, RE_ARABIC_NUM, RE_CN_NUM):
+    # 按优先级顺序匹配：日期 > 英文 > 阿拉伯数字 > 中文数字 > 混合实体
+    # 日期优先，避免被混合实体规则错误匹配
+    for pat in (RE_DATE, RE_ENGLISH, RE_ARABIC_NUM, RE_CN_NUM, RE_MIXED):
         for m in pat.finditer(text):
             spans.append((m.start(), m.end()))
     return _merge_spans(spans)

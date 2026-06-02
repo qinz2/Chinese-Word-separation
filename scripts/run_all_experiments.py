@@ -70,10 +70,10 @@ def phase3_hmm_compare() -> None:
     dictionary, max_len = load_dictionary()
     base = baseline_params()
     # 基线：极小词汇上的手工统计等价
-    from src.hmm import apply_add_one_smoothing, train_from_corpus
+    from src.hmm import apply_delta_smoothing, train_from_corpus
 
-    base_trained = apply_add_one_smoothing(
-        train_from_corpus(["我 来 到 北京 清华大学 学习 自然语言 处理"])
+    base_trained = apply_delta_smoothing(
+        train_from_corpus(["我 来 到 北京 清华大学 学习 自然语言 处理"]), delta=1.0
     )
     opt = load_params(ROOT / "models" / "hmm_params.json")
     lines = ["sentence\tHMM_baseline\tHMM_trained"]

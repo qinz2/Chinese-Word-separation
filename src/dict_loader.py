@@ -8,28 +8,42 @@ DICT_DIR = ROOT / "data" / "dict"
 MAX_LEN_CAP = 7
 
 
-def _read_word_file(path: Path) -> set[str]:
-    words: set[str] = set()
+def _read_word_file(path: Path) -> dict[str, int]:
+    words: dict[str, int] = {}
     if not path.exists():
         return words
     with path.open(encoding="utf-8") as f:
         for line in f:
-            w = line.strip()
-            if w and not w.startswith("#"):
-                words.add(w)
+            line = line.strip()
+            if not line or line.startswith("#"):
+                continue
+            parts = line.split()
+            w = parts[0]
+            freq = int(parts[1]) if len(parts) > 1 else 1
+            words[w] = words.get(w, 0) + freq
     return words
 
 
 def load_dictionary(
     include_ambiguity: bool = True,
     include_oov: bool = True,
-) -> tuple[set[str], int]:
+) -> tuple[dict[str, int], int]:
     words = _read_word_file(DICT_DIR / "dict_base.txt")
-    words |= _read_word_file(DICT_DIR / "dict_core.txt")
+    
+    core_words = _read_word_file(DICT_DIR / "dict_core.txt")
+    for w, freq in core_words.items():
+        words[w] = words.get(w, 0) + freq * 3
+    
     if include_ambiguity:
-        words |= _read_word_file(DICT_DIR / "dict_ambiguity.txt")
+        ambiguity_words = _read_word_file(DICT_DIR / "dict_ambiguity.txt")
+        for w, freq in ambiguity_words.items():
+            words[w] = words.get(w, 0) + freq * 2
+    
     if include_oov:
-        words |= _read_word_file(DICT_DIR / "dict_oov.txt")
+        oov_words = _read_word_file(DICT_DIR / "dict_oov.txt")
+        for w, freq in oov_words.items():
+            words[w] = words.get(w, 0) + freq
+    
     if not words:
         raise FileNotFoundError(
             "词典为空，请先运行 scripts/build_dict.py 生成 data/dict/dict_base.txt"

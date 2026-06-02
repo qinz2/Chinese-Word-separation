@@ -1,49 +1,49 @@
-[2026-05-31 16:21:42] | PHASE=2 | TASK=config | DESIGN | MAX_LEN=7 | cap=7
-[2026-05-31 16:21:42] | PHASE=2 | TASK=FMM | sentence=我来到北京清华大学学习自然语言处理 | FMM=['我', '来到', '北京', '清华大学', '学习', '自然语言处理'] | 0.038ms
-[2026-05-31 16:21:42] | PHASE=2 | TASK=BMM | sentence=我来到北京清华大学学习自然语言处理 | BMM=['我', '来到', '北京', '清华大学', '学习', '自然语言处理'] | 0.019ms | diff=False
-[2026-05-31 16:21:42] | PHASE=2 | TASK=FMM | sentence=自然语言处理 | FMM=['自然语言处理'] | 0.011ms
-[2026-05-31 16:21:42] | PHASE=2 | TASK=BMM | sentence=自然语言处理 | BMM=['自然语言处理'] | 0.005ms | diff=False
-[2026-05-31 16:21:42] | PHASE=2 | TASK=FMM | sentence=小明硕士毕业于中国科学院计算所 | FMM=['小明', '硕士', '毕业', '于', '中国', '科学院', '计算所'] | 0.033ms
-[2026-05-31 16:21:42] | PHASE=2 | TASK=BMM | sentence=小明硕士毕业于中国科学院计算所 | BMM=['小明', '硕士', '毕业', '于', '中国', '科学院', '计算所'] | 0.020ms | diff=False
-[2026-05-31 16:21:42] | PHASE=2 | TASK=FMM | sentence=研究生命起源 | FMM=['研究生', '命', '起源'] | 0.016ms
-[2026-05-31 16:21:42] | PHASE=2 | TASK=BMM | sentence=研究生命起源 | BMM=['研究', '生命', '起源'] | 0.009ms | diff=True
-[2026-05-31 16:21:42] | PHASE=2 | TASK=FMM | sentence=研究生命起源 | FMM=['研究生', '命', '起源'] | 0.014ms
-[2026-05-31 16:21:42] | PHASE=2 | TASK=BMM | sentence=研究生命起源 | BMM=['研究', '生命', '起源'] | 0.008ms | diff=True
-[2026-05-31 16:21:42] | PHASE=2 | TASK=FMM | sentence=这个苹果不大好吃 | FMM=['这个', '苹果', '不大', '好吃'] | 0.019ms
-[2026-05-31 16:21:42] | PHASE=2 | TASK=BMM | sentence=这个苹果不大好吃 | BMM=['这个', '苹果', '不大', '好吃'] | 0.010ms | diff=False
-[2026-05-31 16:21:42] | PHASE=2 | TASK=FMM | sentence=我喜欢上一个人 | FMM=['我', '喜欢', '上', '一个人'] | 0.021ms
-[2026-05-31 16:21:42] | PHASE=2 | TASK=BMM | sentence=我喜欢上一个人 | BMM=['我', '喜欢', '上', '一个人'] | 0.009ms | diff=False
-[2026-05-31 16:21:42] | PHASE=2 | TASK=FMM | sentence=明天下雨 | FMM=['明天', '下雨'] | 0.012ms
-[2026-05-31 16:21:42] | PHASE=2 | TASK=BMM | sentence=明天下雨 | BMM=['明天', '下雨'] | 0.005ms | diff=False
-[2026-05-31 16:21:42] | PHASE=2 | TASK=FMM | sentence=白云观道士 | FMM=['白云观', '道士'] | 0.014ms
-[2026-05-31 16:21:42] | PHASE=2 | TASK=BMM | sentence=白云观道士 | BMM=['白云观', '道士'] | 0.006ms | diff=False
-[2026-05-31 16:21:42] | PHASE=2 | TASK=FMM | sentence=新闻报道发布会见 | FMM=['新闻', '报道', '发布会', '见'] | 0.020ms
-[2026-05-31 16:21:42] | PHASE=2 | TASK=BMM | sentence=新闻报道发布会见 | BMM=['新闻', '报道', '发布', '会见'] | 0.011ms | diff=True
-[2026-05-31 16:21:42] | PHASE=2 | TASK=FMM | sentence=和尚面好吃 | FMM=['和尚', '面', '好吃'] | 0.016ms
-[2026-05-31 16:21:42] | PHASE=2 | TASK=BMM | sentence=和尚面好吃 | BMM=['和尚', '面', '好吃'] | 0.008ms | diff=False
-[2026-05-31 16:21:42] | PHASE=2 | TASK=FMM | sentence=现在将来 | FMM=['现在', '将来'] | 0.013ms
-[2026-05-31 16:21:42] | PHASE=2 | TASK=BMM | sentence=现在将来 | BMM=['现在', '将来'] | 0.006ms | diff=False
-[2026-05-31 16:21:42] | PHASE=2 | TASK=FMM | sentence=南京市长江大桥 | FMM=['南京市', '长江大桥'] | 0.014ms
-[2026-05-31 16:21:42] | PHASE=2 | TASK=BMM | sentence=南京市长江大桥 | BMM=['南京市', '长江大桥'] | 0.006ms | diff=False
-[2026-05-31 16:21:42] | PHASE=2 | TASK=FMM | sentence=乒乓球拍卖完了 | FMM=['乒', '乓', '球', '拍卖', '完', '了'] | 0.026ms
-[2026-05-31 16:21:42] | PHASE=2 | TASK=BMM | sentence=乒乓球拍卖完了 | BMM=['乒', '乓', '球', '拍卖', '完', '了'] | 0.017ms | diff=False
-[2026-05-31 16:21:42] | PHASE=2 | TASK=FMM | sentence=新商品留给部分老弱病残 | FMM=['新', '商品', '留给', '部分', '老', '弱', '病', '残'] | 0.036ms
-[2026-05-31 16:21:42] | PHASE=2 | TASK=BMM | sentence=新商品留给部分老弱病残 | BMM=['新', '商品', '留给', '部分', '老', '弱', '病', '残'] | 0.024ms | diff=False
-[2026-05-31 16:21:42] | PHASE=2 | TASK=FMM | sentence=他这个人没说过什么 | FMM=['他', '这个', '人', '没', '说', '过', '什么'] | 0.036ms
-[2026-05-31 16:21:42] | PHASE=2 | TASK=BMM | sentence=他这个人没说过什么 | BMM=['他', '这个', '人', '没', '说', '过', '什么'] | 0.019ms | diff=False
-[2026-05-31 16:21:42] | PHASE=2 | TASK=FMM | sentence=三个和尚没水喝 | FMM=['三个', '和尚', '没水', '喝'] | 0.025ms
-[2026-05-31 16:21:42] | PHASE=2 | TASK=BMM | sentence=三个和尚没水喝 | BMM=['三个', '和尚', '没水', '喝'] | 0.013ms | diff=False
-[2026-05-31 16:21:42] | PHASE=2 | TASK=FMM | sentence=咬死猎人的狗 | FMM=['咬', '死', '猎人', '的', '狗'] | 0.026ms
-[2026-05-31 16:21:42] | PHASE=2 | TASK=BMM | sentence=咬死猎人的狗 | BMM=['咬', '死', '猎人', '的', '狗'] | 0.014ms | diff=False
-[2026-05-31 16:21:42] | PHASE=2 | TASK=FMM | sentence=我们中出了一个叛徒 | FMM=['我们', '中出', '了', '一个', '叛徒'] | 0.032ms
-[2026-05-31 16:21:42] | PHASE=2 | TASK=BMM | sentence=我们中出了一个叛徒 | BMM=['我们', '中出', '了', '一个', '叛徒'] | 0.015ms | diff=False
-[2026-05-31 16:21:42] | PHASE=2 | TASK=FMM | sentence=进口水果与国产水果价格差异明显 | FMM=['进口', '水果', '与', '国产', '水果', '价格', '差异', '明显'] | 0.041ms
-[2026-05-31 16:21:42] | PHASE=2 | TASK=BMM | sentence=进口水果与国产水果价格差异明显 | BMM=['进口', '水果', '与', '国产', '水果', '价格', '差异', '明显'] | 0.025ms | diff=False
-[2026-05-31 16:21:42] | PHASE=2 | TASK=FMM | sentence=他走了大约半小时 | FMM=['他', '走', '了', '大约', '半小时'] | 0.030ms
-[2026-05-31 16:21:42] | PHASE=2 | TASK=BMM | sentence=他走了大约半小时 | BMM=['他', '走', '了', '大约', '半小时'] | 0.012ms | diff=False
-[2026-05-31 16:21:42] | PHASE=2 | TASK=FMM | sentence=学生会上发言 | FMM=['学生', '会上', '发言'] | 0.018ms
-[2026-05-31 16:21:42] | PHASE=2 | TASK=BMM | sentence=学生会上发言 | BMM=['学生', '会上', '发言'] | 0.008ms | diff=False
-[2026-05-31 16:21:42] | PHASE=2 | TASK=FMM | sentence=政府有关部门表示支持 | FMM=['政府', '有关', '部门', '表示', '支持'] | 0.025ms
-[2026-05-31 16:21:42] | PHASE=2 | TASK=BMM | sentence=政府有关部门表示支持 | BMM=['政府', '有关', '部门', '表示', '支持'] | 0.014ms | diff=False
-[2026-05-31 16:21:42] | PHASE=2 | TASK=FMM | sentence=南京市长江大桥欢迎您 | FMM=['南京市', '长江大桥', '欢', '迎', '您'] | 0.023ms
-[2026-05-31 16:21:42] | PHASE=2 | TASK=BMM | sentence=南京市长江大桥欢迎您 | BMM=['南京市', '长江大桥', '欢', '迎', '您'] | 0.018ms | diff=False
+[2026-06-02 17:14:33] | PHASE=2 | TASK=config | DESIGN | MAX_LEN=7 | cap=7
+[2026-06-02 17:14:33] | PHASE=2 | TASK=FMM | sentence=我来到北京清华大学学习自然语言处理 | FMM=['我', '来到', '北京', '清华大学', '学习', '自然语言处理'] | 0.054ms
+[2026-06-02 17:14:33] | PHASE=2 | TASK=BMM | sentence=我来到北京清华大学学习自然语言处理 | BMM=['我', '来到', '北京', '清华大学', '学习', '自然语言处理'] | 0.025ms | diff=False
+[2026-06-02 17:14:33] | PHASE=2 | TASK=FMM | sentence=自然语言处理 | FMM=['自然语言处理'] | 0.017ms
+[2026-06-02 17:14:33] | PHASE=2 | TASK=BMM | sentence=自然语言处理 | BMM=['自然语言处理'] | 0.005ms | diff=False
+[2026-06-02 17:14:33] | PHASE=2 | TASK=FMM | sentence=小明硕士毕业于中国科学院计算所 | FMM=['小明', '硕士', '毕业', '于', '中国', '科学院', '计算所'] | 0.053ms
+[2026-06-02 17:14:33] | PHASE=2 | TASK=BMM | sentence=小明硕士毕业于中国科学院计算所 | BMM=['小明', '硕士', '毕业', '于', '中国', '科学院', '计算所'] | 0.029ms | diff=False
+[2026-06-02 17:14:33] | PHASE=2 | TASK=FMM | sentence=研究生命起源 | FMM=['研究生', '命', '起源'] | 0.025ms
+[2026-06-02 17:14:33] | PHASE=2 | TASK=BMM | sentence=研究生命起源 | BMM=['研究', '生命', '起源'] | 0.012ms | diff=True
+[2026-06-02 17:14:33] | PHASE=2 | TASK=FMM | sentence=研究生命起源 | FMM=['研究生', '命', '起源'] | 0.020ms
+[2026-06-02 17:14:33] | PHASE=2 | TASK=BMM | sentence=研究生命起源 | BMM=['研究', '生命', '起源'] | 0.010ms | diff=True
+[2026-06-02 17:14:33] | PHASE=2 | TASK=FMM | sentence=这个苹果不大好吃 | FMM=['这个', '苹果', '不大', '好吃'] | 0.033ms
+[2026-06-02 17:14:33] | PHASE=2 | TASK=BMM | sentence=这个苹果不大好吃 | BMM=['这个', '苹果', '不大', '好吃'] | 0.014ms | diff=False
+[2026-06-02 17:14:33] | PHASE=2 | TASK=FMM | sentence=我喜欢上一个人 | FMM=['我', '喜欢', '上', '一个人'] | 0.031ms
+[2026-06-02 17:14:33] | PHASE=2 | TASK=BMM | sentence=我喜欢上一个人 | BMM=['我', '喜欢', '上', '一个人'] | 0.012ms | diff=False
+[2026-06-02 17:14:33] | PHASE=2 | TASK=FMM | sentence=明天下雨 | FMM=['明天', '下雨'] | 0.021ms
+[2026-06-02 17:14:33] | PHASE=2 | TASK=BMM | sentence=明天下雨 | BMM=['明天', '下雨'] | 0.007ms | diff=False
+[2026-06-02 17:14:33] | PHASE=2 | TASK=FMM | sentence=白云观道士 | FMM=['白云观', '道士'] | 0.023ms
+[2026-06-02 17:14:33] | PHASE=2 | TASK=BMM | sentence=白云观道士 | BMM=['白云观', '道士'] | 0.009ms | diff=False
+[2026-06-02 17:14:33] | PHASE=2 | TASK=FMM | sentence=新闻报道发布会见 | FMM=['新闻', '报道', '发布会', '见'] | 0.034ms
+[2026-06-02 17:14:33] | PHASE=2 | TASK=BMM | sentence=新闻报道发布会见 | BMM=['新闻', '报道', '发布', '会见'] | 0.020ms | diff=True
+[2026-06-02 17:14:33] | PHASE=2 | TASK=FMM | sentence=和尚面好吃 | FMM=['和尚', '面', '好吃'] | 0.033ms
+[2026-06-02 17:14:33] | PHASE=2 | TASK=BMM | sentence=和尚面好吃 | BMM=['和尚', '面', '好吃'] | 0.012ms | diff=False
+[2026-06-02 17:14:33] | PHASE=2 | TASK=FMM | sentence=现在将来 | FMM=['现在', '将来'] | 0.021ms
+[2026-06-02 17:14:33] | PHASE=2 | TASK=BMM | sentence=现在将来 | BMM=['现在', '将来'] | 0.007ms | diff=False
+[2026-06-02 17:14:33] | PHASE=2 | TASK=FMM | sentence=南京市长江大桥 | FMM=['南京市', '长江大桥'] | 0.024ms
+[2026-06-02 17:14:33] | PHASE=2 | TASK=BMM | sentence=南京市长江大桥 | BMM=['南京市', '长江大桥'] | 0.009ms | diff=False
+[2026-06-02 17:14:33] | PHASE=2 | TASK=FMM | sentence=乒乓球拍卖完了 | FMM=['乒', '乓', '球', '拍卖', '完', '了'] | 0.041ms
+[2026-06-02 17:14:33] | PHASE=2 | TASK=BMM | sentence=乒乓球拍卖完了 | BMM=['乒', '乓', '球', '拍卖', '完', '了'] | 0.020ms | diff=False
+[2026-06-02 17:14:33] | PHASE=2 | TASK=FMM | sentence=新商品留给部分老弱病残 | FMM=['新', '商品', '留给', '部分', '老', '弱', '病', '残'] | 0.050ms
+[2026-06-02 17:14:33] | PHASE=2 | TASK=BMM | sentence=新商品留给部分老弱病残 | BMM=['新', '商品', '留给', '部分', '老', '弱', '病', '残'] | 0.029ms | diff=False
+[2026-06-02 17:14:33] | PHASE=2 | TASK=FMM | sentence=他这个人没说过什么 | FMM=['他', '这个', '人', '没', '说', '过', '什么'] | 0.063ms
+[2026-06-02 17:14:33] | PHASE=2 | TASK=BMM | sentence=他这个人没说过什么 | BMM=['他', '这个', '人', '没', '说', '过', '什么'] | 0.027ms | diff=False
+[2026-06-02 17:14:33] | PHASE=2 | TASK=FMM | sentence=三个和尚没水喝 | FMM=['三个', '和尚', '没水', '喝'] | 0.034ms
+[2026-06-02 17:14:33] | PHASE=2 | TASK=BMM | sentence=三个和尚没水喝 | BMM=['三个', '和尚', '没水', '喝'] | 0.017ms | diff=False
+[2026-06-02 17:14:33] | PHASE=2 | TASK=FMM | sentence=咬死猎人的狗 | FMM=['咬', '死', '猎人', '的', '狗'] | 0.033ms
+[2026-06-02 17:14:33] | PHASE=2 | TASK=BMM | sentence=咬死猎人的狗 | BMM=['咬', '死', '猎人', '的', '狗'] | 0.015ms | diff=False
+[2026-06-02 17:14:33] | PHASE=2 | TASK=FMM | sentence=我们中出了一个叛徒 | FMM=['我们', '中出', '了', '一个', '叛徒'] | 0.036ms
+[2026-06-02 17:14:33] | PHASE=2 | TASK=BMM | sentence=我们中出了一个叛徒 | BMM=['我们', '中出', '了', '一个', '叛徒'] | 0.020ms | diff=False
+[2026-06-02 17:14:33] | PHASE=2 | TASK=FMM | sentence=进口水果与国产水果价格差异明显 | FMM=['进口', '水果', '与', '国产', '水果', '价格', '差异', '明显'] | 0.050ms
+[2026-06-02 17:14:33] | PHASE=2 | TASK=BMM | sentence=进口水果与国产水果价格差异明显 | BMM=['进口', '水果', '与', '国产', '水果', '价格', '差异', '明显'] | 0.029ms | diff=False
+[2026-06-02 17:14:33] | PHASE=2 | TASK=FMM | sentence=他走了大约半小时 | FMM=['他', '走', '了', '大约', '半小时'] | 0.038ms
+[2026-06-02 17:14:33] | PHASE=2 | TASK=BMM | sentence=他走了大约半小时 | BMM=['他', '走', '了', '大约', '半小时'] | 0.015ms | diff=False
+[2026-06-02 17:14:33] | PHASE=2 | TASK=FMM | sentence=学生会上发言 | FMM=['学生', '会上', '发言'] | 0.024ms
+[2026-06-02 17:14:33] | PHASE=2 | TASK=BMM | sentence=学生会上发言 | BMM=['学生', '会上', '发言'] | 0.010ms | diff=False
+[2026-06-02 17:14:33] | PHASE=2 | TASK=FMM | sentence=政府有关部门表示支持 | FMM=['政府', '有关', '部门', '表示', '支持'] | 0.031ms
+[2026-06-02 17:14:33] | PHASE=2 | TASK=BMM | sentence=政府有关部门表示支持 | BMM=['政府', '有关', '部门', '表示', '支持'] | 0.018ms | diff=False
+[2026-06-02 17:14:33] | PHASE=2 | TASK=FMM | sentence=南京市长江大桥欢迎您 | FMM=['南京市', '长江大桥', '欢', '迎', '您'] | 0.028ms
+[2026-06-02 17:14:33] | PHASE=2 | TASK=BMM | sentence=南京市长江大桥欢迎您 | BMM=['南京市', '长江大桥', '欢', '迎', '您'] | 0.022ms | diff=False

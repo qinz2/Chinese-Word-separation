@@ -53,6 +53,7 @@ def train_from_corpus(lines: list[str]) -> dict[str, Any]:
     trans_count = {s: {t: 0 for t in STATES} for s in STATES}
     emit_count = {s: {} for s in STATES}
     vocab: set[str] = set()
+    char_train_freq: dict[str, int] = {}
 
     for line in lines:
         words = [w for w in line.strip().split() if w]
@@ -65,6 +66,7 @@ def train_from_corpus(lines: list[str]) -> dict[str, Any]:
         pi_count[tags[0]] += 1
         for ch, tag in zip(chars, tags):
             vocab.add(ch)
+            char_train_freq[ch] = char_train_freq.get(ch, 0) + 1
             emit_count[tag][ch] = emit_count[tag].get(ch, 0) + 1
         for i in range(1, len(tags)):
             trans_count[tags[i - 1]][tags[i]] += 1
@@ -74,34 +76,35 @@ def train_from_corpus(lines: list[str]) -> dict[str, Any]:
         "trans_count": trans_count,
         "emit_count": emit_count,
         "vocab": sorted(vocab),
+        "char_train_freq": char_train_freq,
     }
 
 
-def apply_add_one_smoothing(raw: dict[str, Any]) -> dict[str, Any]:
+def apply_delta_smoothing(raw: dict[str, Any], delta: float = 0.1) -> dict[str, Any]:
     """
-    +1 平滑：
-    - 转移：P(t|s) = (count(s->t)+1) / (count(s)+4)
-    - 发射：P(c|s) = (count(s,c)+1) / (count(s)+|V|)
+    +δ 平滑（替代 +1 平滑）：
+    - 转移：P(t|s) = (count(s->t) + delta) / (count(s) + delta * N_STATES)
+    - 发射：P(c|s) = (count(s,c) + delta) / (count(s) + delta * |V|)
     """
     vocab = raw["vocab"]
     v_size = len(vocab)
 
-    pi_total = sum(raw["pi_count"].values()) + N_STATES
-    pi = {s: (raw["pi_count"][s] + 1) / pi_total for s in STATES}
+    pi_total = sum(raw["pi_count"].values()) + delta * N_STATES
+    pi = {s: (raw["pi_count"][s] + delta) / pi_total for s in STATES}
 
     A: dict[str, dict[str, float]] = {s: {} for s in STATES}
     for s in STATES:
-        s_total = sum(raw["trans_count"][s].values()) + N_STATES
+        s_total = sum(raw["trans_count"][s].values()) + delta * N_STATES
         for t in STATES:
-            A[s][t] = (raw["trans_count"][s][t] + 1) / s_total
+            A[s][t] = (raw["trans_count"][s][t] + delta) / s_total
 
     B: dict[str, dict[str, float]] = {s: {} for s in STATES}
     for s in STATES:
-        s_emit_total = sum(raw["emit_count"][s].values()) + v_size
+        s_emit_total = sum(raw["emit_count"][s].values()) + delta * v_size
         for c in vocab:
-            B[s][c] = (raw["emit_count"][s].get(c, 0) + 1) / s_emit_total
+            B[s][c] = (raw["emit_count"][s].get(c, 0) + delta) / s_emit_total
 
-    return {"pi": pi, "A": A, "B": B, "vocab": vocab}
+    return {"pi": pi, "A": A, "B": B, "vocab": vocab, "char_train_freq": raw.get("char_train_freq", {})}
 
 
 def params_to_log_matrices(params: dict[str, Any]) -> tuple[np.ndarray, np.ndarray, np.ndarray, list[str]]:
@@ -132,13 +135,16 @@ def viterbi_o4(sentence: str, params: dict[str, Any]) -> list[str]:
     """
     O(4) 空间 Viterbi：仅保留当前/上一步概率；
     回溯需同时保留 prev_bp（上一步）与 cur_bp（当前步）指针数组。
+    支持 OOV 字符分级回退策略。
     """
     if not sentence:
         return []
 
     pi_log, A, B, vocab = params_to_log_matrices(params)
     char_idx = {c: i for i, c in enumerate(vocab)}
-    emit_default = math.log(1.0 / (len(vocab) * 5)) if vocab else math.log(1e-8)
+    v_size = len(vocab)
+    
+    char_train_freq = params.get("char_train_freq", {})
 
     n = len(sentence)
     prev_v = pi_log.copy()
@@ -146,11 +152,17 @@ def viterbi_o4(sentence: str, params: dict[str, Any]) -> list[str]:
 
     for t in range(n):
         ch = sentence[t]
-        emit_col = (
-            np.array([B[s, char_idx[ch]] for s in range(N_STATES)])
-            if ch in char_idx
-            else np.full(N_STATES, emit_default)
-        )
+        if ch in char_idx:
+            emit_col = np.array([B[s, char_idx[ch]] for s in range(N_STATES)])
+        else:
+            freq = char_train_freq.get(ch, 0)
+            if freq > 10:
+                emit_default = math.log(0.5 / v_size)
+            elif freq > 0:
+                emit_default = math.log(0.1 / v_size)
+            else:
+                emit_default = math.log(0.01 / v_size)
+            emit_col = np.full(N_STATES, emit_default)
         cur_v = np.full(N_STATES, LOG_ZERO)
         cur_bp = np.zeros(N_STATES, dtype=np.int32)
         for y in range(N_STATES):
@@ -214,9 +226,9 @@ def load_params(path: Path) -> dict[str, Any]:
         return json.load(f)
 
 
-def train_and_save(corpus_path: Path, out_path: Path) -> dict[str, Any]:
+def train_and_save(corpus_path: Path, out_path: Path, delta: float = 0.1) -> dict[str, Any]:
     lines = corpus_path.read_text(encoding="utf-8").splitlines()
     raw = train_from_corpus(lines)
-    params = apply_add_one_smoothing(raw)
+    params = apply_delta_smoothing(raw, delta)
     save_params(params, out_path)
     return params

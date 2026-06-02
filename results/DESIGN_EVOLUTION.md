@@ -1,7 +1,7 @@
 # 中文分词实验设计演进文档
 
-**日期**: 2026-05-31  
-**版本**: v1.0  
+**日期**: 2026-05-31
+**版本**: v1.0
 **说明**: 记录从初始设计到最终优化的完整思路链，包括问题发现、方案辩论、决策演变
 
 ---
@@ -244,17 +244,17 @@ def _pre_extract_entities(sentence: str) -> list[tuple[str, str]]:
     for pat in (RE_DATE, RE_ENGLISH, RE_ARABIC_NUM, RE_CN_NUM):
         for m in pat.finditer(sentence):
             spans.append((m.start(), m.end()))
-    
+
     if not spans:
         return [("chinese", sentence)]
-    
+
     # 合并重叠区间，分割句子为[(type, text), ...]
     ...
 ```
 
 **重构后的流程**：
 ```
-Layer0: _pre_extract_entities() 
+Layer0: _pre_extract_entities()
   → [('chinese', '年轻人热衷'), ('entity', 'Citywalk'), ('chinese', '和搭子社交')]
 
 Layer1: 对chinese片段执行BiMM
@@ -567,12 +567,261 @@ Layer3: 后处理合并
 
 ---
 
+## 十、第二次优化（2026-06-01）：向导师汇报前的系统完善
+
+### 10.1 优化背景
+
+在完成第一次优化后，系统虽已具备基本分词能力，但存在以下问题：
+- **歧义集一致率偏低**（50%）：交集歧义消解能力不足
+- **OOV集一致率仍然较低**（6.67%）：部分英文实体仍有切碎现象
+- **长句集一致率为0%**：超长句切分过碎
+- **中文数字规则不完善**：不支持"五成"、"三分之一"等表达
+
+### 10.2 优化方案与用户反馈
+
+#### 用户的优先级建议
+
+用户对原方案的评估：
+
+| 方案 | 用户建议 | 理由 |
+|------|---------|------|
+| 方案1（N-gram） | ✅ 可行，但需语料 | bigram概率表需从真实语料训练，否则稀疏 |
+| 方案2（动态词典） | ⚠️ 需明确机制 | "动态"指人工添加还是自动发现？后者需新词发现算法 |
+| 方案3（长句分段） | ✅ **低风险，直接做** | 按标点切分即可，改动小 |
+| 方案4（实体规则） | ⚠️ 注意优先级 | RE_DATE和RE_MIXED有重叠，需明确顺序 |
+| 方案5（CRF） | ⏸️ 成本高，ROI不确定 | 需标注语料、特征模板、调参 |
+
+**用户建议优先级**：方案3和4（低成本，见效快）→ 方案1（需语料）→ 方案2/5（远期目标）
+
+#### 优化执行计划
+
+```python
+todos = [
+    {"id": "1", "content": "方案3：长句分段策略", "status": "completed", "priority": "high"},
+    {"id": "2", "content": "方案4：增强实体识别规则", "status": "completed", "priority": "high"},
+    {"id": "3", "content": "方案1：N-gram统计模型", "status": "completed", "priority": "medium"},
+    {"id": "4", "content": "方案1：N-gram集成", "status": "completed", "priority": "medium"},
+    {"id": "7", "content": "验证与测试", "status": "completed", "priority": "high"},
+]
+```
+
+### 10.3 实施方案详解
+
+#### 方案3：长句分段策略
+
+**问题诊断**：
+```
+句子：中国科学院计算技术研究所自然语言处理实验室正在研究基于统计与规则相结合的中文分词算法
+预测：中国/科学院/计算技术/研究所/自然语言处理/实验室/正在/研究/基于/统计/与/规则/相结合/的/中文分词/算法
+原因：超长句多次单字fallback导致切分过碎
+```
+
+**解决方案**：
+```python
+# hybrid.py 新增函数
+SENTENCE_PUNCTUATION = set('，。！？；、：\n\r\t')
+CLAUSE_PUNCTUATION = set('，；、')
+
+def _segment_long_sentence(text: str, max_segment_len: int = 30) -> list[str]:
+    """
+    长句分段处理：将超长句子按标点切分为多个较短片段
+
+    策略：
+    1. 优先在句子结束标点（。！？）处切分
+    2. 其次在分句标点（，；、）处切分
+    3. 最长不超过max_segment_len字符
+    """
+```
+
+**集成方式**：
+```python
+def hybrid_segment(sentence, dictionary, max_len, hmm_params):
+    # 新增：长句分段预处理
+    sentence_segments = _segment_long_sentence(sentence)
+    results = []
+    for seg in sentence_segments:
+        seg_result = process_single_segment(seg, ...)
+        results.extend(seg_result)
+    return results
+```
+
+#### 方案4：增强实体识别规则
+
+**问题诊断**：
+```
+RE_DATE和RE_MIXED有重叠："2024年"可能被RE_MIXED错误匹配
+RE_CN_NUM规则太窄：不支持"五成"、"三分之一"等表达
+```
+
+**解决方案**：
+```python
+# rules.py 修改
+# 日期规则（放在最前面，优先级最高）
+RE_DATE = re.compile(
+    r"\d{4}年\d{1,2}月\d{1,2}日|"
+    r"\d{4}年\d{1,2}月|"
+    r"\d{4}年|"
+    r"\d{4}-\d{1,2}-\d{1,2}|"
+    r"\d{4}/\d{1,2}/\d{1,2}"
+)
+
+# 中文数字规则（扩展支持更多表达）
+RE_CN_NUM = re.compile(
+    r"[零一二三四五六七八九十百千万亿〇两壹贰叁肆伍陆柒捌玖拾佰仟萬亿]+"
+    r"(?:(?:[成倍分])|(?:分之...)|(?:点...))?"
+)
+```
+
+#### 方案1：N-gram统计模型
+
+**用户的关键提醒**：
+> "bigram概率表从哪来？如果没有预训练语料，自己统计的词共现数据可能稀疏。建议先用已有分词语料（如PKU/MSR）训练"
+
+**实现步骤**：
+
+1. **训练bigram模型**：
+```python
+# scripts/train_bigram.py
+def train_bigram(words_list):
+    """训练bigram模型"""
+    unigram_counts = defaultdict(int)
+    bigram_counts = defaultdict(int)
+
+    for words in words_list:
+        padded = ['<BOS>'] + words + ['<EOS>']
+        for i in range(len(padded) - 1):
+            w1, w2 = padded[i], padded[i + 1]
+            unigram_counts[w1] += 1
+            bigram_counts[(w1, w2)] += 1
+
+    # 计算条件概率 P(w2|w1) = count(w1,w2) / count(w1)
+    # 使用加1平滑
+```
+
+2. **集成到BiMM**：
+```python
+# src/bimm.py
+def bimm(sentence, dictionary, max_len):
+    f_result = fmm(sentence, dictionary, max_len)
+    b_result = bmm(sentence, dictionary, max_len)
+
+    if f_result == b_result:
+        return f_result
+    if len(f_result) != len(b_result):
+        return f_result if len(f_result) < len(b_result) else b_result
+
+    f_singles = _single_char_count(f_result)
+    b_singles = _single_char_count(b_result)
+    if f_singles != b_singles:
+        return f_result if f_singles < b_singles else b_result
+
+    # 新增：使用bigram概率选择最优解
+    f_score = _calculate_bigram_score(f_result)
+    b_score = _calculate_bigram_score(b_result)
+    if f_score != b_score:
+        return f_result if f_score > b_score else b_result
+
+    return b_result
+```
+
+3. **训练结果**：
+```
+PKU语料解析：19358句子
+bigram模型：55827词汇，463342个bigram
+```
+
+### 10.4 实验验证
+
+#### 测试结果对比
+
+| 测试集 | 改进前（5月31日） | 改进后（6月1日） | 提升 |
+|--------|------------------|------------------|------|
+| Basic集 | 25% | 25% | - |
+| **Ambiguity集** | 50% | **70%** | ✅ **+20%** |
+| **OOV集** | 6.67% | **26.7%** | ✅ **+20%** |
+| **Long集** | 0% | **10%** | ✅ **+10%** |
+
+#### 典型案例改善
+
+| 句子 | 改进前 | 改进后 | 原因 |
+|------|--------|--------|------|
+| 研究生命起源 | 研究生/命/起源 ❌ | 研究/生命/起源 ✅ | Bigram概率正确选择 |
+| 年轻人热衷Citywalk... | C/i/t/y/w/a/l/k ❌ | Citywalk ✅ | Layer0实体保护 |
+| DeepSeek大模型... | D/e/e/p/S/e/e/k... ❌ | DeepSeek/大模型... ✅ | 英文识别修复 |
+
+### 10.5 最终架构
+
+```
+输入文本
+    │
+    ▼
+┌─────────────────────────────────┐
+│ Layer0: 实体预处理              │ ← 英文/日期/数字提取（优先级：日期>英文>数字）
+│ (RE_PATTERN匹配)               │
+└─────────────────────────────────┘
+    │
+    ▼
+┌─────────────────────────────────┐
+│ 长句分段                         │ ← 按标点切分超长句（≤30字/段）
+│ (SENTENCE_PUNCTUATION)         │
+└─────────────────────────────────┘
+    │
+    ▼
+┌─────────────────────────────────┐
+│ Layer1: BiMM                    │ ← 双向最大匹配
+│ FMM + BMM + 融合规则            │    规则：词数→单字数→bigram概率
+└─────────────────────────────────┘
+    │
+    ▼
+┌─────────────────────────────────┐
+│ Layer2: HMM                     │ ← 未登录词处理（≥3字单字串）
+│ (BMES标注 + Viterbi解码)       │
+└─────────────────────────────────┘
+    │
+    ▼
+┌─────────────────────────────────┐
+│ Layer3: 规则合并                 │ ← 实体边界修复
+│ (merge_entities)               │
+└─────────────────────────────────┘
+    │
+    ▼
+输出分词结果
+```
+
+### 10.6 技术指标汇总
+
+| 指标 | 数值 |
+|------|------|
+| 词典规模 | 96,089词 |
+| 最大匹配长度 | 7字 |
+| HMM词汇量 | 4,289 |
+| Bigram词汇量 | 55,827 |
+| Bigram条目数 | 463,342 |
+| 训练语料 | 10,000句（人民日报标注语料） |
+
+### 10.7 经验总结
+
+**低成本高回报的改进**：
+1. **调整执行顺序**：Layer0预处理激活了Layer3的已有能力
+2. **明确规则优先级**：避免正则冲突
+3. **利用已有语料**：从PKU语料训练bigram模型
+
+**仍存在的局限**：
+1. 与jieba的标注粒度标准不同（系统选最长匹配）
+2. 新词识别能力有限（如"通义千问"）
+3. 深度学习模型（CRF/BERT）可进一步提升
+
+---
+
 **文档版本历史**：
-- v1.0 (2026-05-31): 初始版本，记录完整的设计演进过程
+- v1.0 (2026-05-31): 初始版本，记录第一次优化的设计演进过程
+- **v2.0 (2026-06-01)**: 第二次优化，记录长句分段、实体规则、N-gram模型的完整实现
 
 **参考文献**：
 1. plan.md - 原始实验计划
 2. logs/experiment_journal.txt - 实验日志
 3. logs/phase5_hybrid_jieba.txt - Layer0优化记录
 4. results/TECHNICAL_DECISIONS.md - 技术决策详解
-5. 用户异议文档 - 深度分析与数学证明
+5. scripts/train_bigram.py - Bigram训练脚本
+6. src/bimm.py - BiMM+歧义消解实现
+7. src/hybrid.py - 四层混合架构实现

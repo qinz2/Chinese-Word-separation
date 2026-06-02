@@ -26,21 +26,33 @@ def _valid_word(w: str) -> bool:
     return any("\u4e00" <= c <= "\u9fff" for c in w)
 
 
-def load_thuocl() -> set[str]:
-    words: set[str] = set()
+def load_thuocl() -> dict[str, int]:
+    words: dict[str, int] = {}
     if not RAW_THUOCL.exists():
         return words
     for path in RAW_THUOCL.glob("*.txt"):
         with path.open(encoding="utf-8", errors="ignore") as f:
             for line in f:
-                w = line.strip().split()[0] if line.strip() else ""
+                line = line.strip()
+                if not line:
+                    continue
+                parts = line.split()
+                if not parts:
+                    continue
+                w = parts[0]
+                freq = 1
+                if len(parts) > 1:
+                    try:
+                        freq = int(parts[1])
+                    except ValueError:
+                        freq = 1
                 if _valid_word(w):
-                    words.add(w)
+                    words[w] = words.get(w, 0) + freq
     return words
 
 
-def load_jieba_raw(limit: int = 15000) -> set[str]:
-    words: set[str] = set()
+def load_jieba_raw(limit: int = 15000) -> dict[str, int]:
+    words: dict[str, int] = {}
     if not RAW_JIEBA.exists():
         return words
     with RAW_JIEBA.open(encoding="utf-8", errors="ignore") as f:
@@ -51,8 +63,9 @@ def load_jieba_raw(limit: int = 15000) -> set[str]:
             if not parts:
                 continue
             w = parts[0]
+            freq = int(parts[1]) if len(parts) > 1 else 1
             if _valid_word(w):
-                words.add(w)
+                words[w] = words.get(w, 0) + freq
             if len(words) >= limit:
                 break
     return words
@@ -63,18 +76,24 @@ def main() -> None:
     parser.add_argument("--min-words", type=int, default=MIN_WORDS)
     args = parser.parse_args()
 
-    words = load_thuocl()
+    words: dict[str, int] = {}
     sources = []
-    if words:
-        sources.append(f"THUOCL:{len(words)}")
+
+    thuocl_words = load_thuocl()
+    if thuocl_words:
+        words.update(thuocl_words)
+        sources.append(f"THUOCL:{len(thuocl_words)}")
+
     if len(words) < args.min_words:
         jieba_words = load_jieba_raw()
-        words |= jieba_words
+        for w, freq in jieba_words.items():
+            words[w] = words.get(w, 0) + freq * 2
         sources.append(f"jieba_dict_fallback:{len(jieba_words)}")
 
     OUT.parent.mkdir(parents=True, exist_ok=True)
-    sorted_words = sorted(words)
-    OUT.write_text("\n".join(sorted_words), encoding="utf-8")
+    sorted_words = sorted(words.items(), key=lambda x: (-x[1], x[0]))
+    output_lines = [f"{w} {freq}" for w, freq in sorted_words]
+    OUT.write_text("\n".join(output_lines), encoding="utf-8")
 
     msg = (
         f"dict_base 生成完成 | 词数={len(sorted_words)} | 来源={sources} | "

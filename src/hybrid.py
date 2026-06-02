@@ -1,4 +1,4 @@
-"""三层混合：Layer0 实体预处理 -> Layer1 BiMM(词典最长匹配) -> Layer2 HMM(长未登录串) -> Layer3 实体规则。"""
+"""四层混合：长句分段 -> Layer0 实体预处理 -> Layer1 BiMM(词典最长匹配) -> Layer2 HMM(长未登录串) -> Layer3 实体规则。"""
 from __future__ import annotations
 
 import re
@@ -6,13 +6,71 @@ from typing import Any
 
 from .bimm import bimm
 from .hmm import segment as hmm_segment
-from .rules import merge_entities, RE_DATE, RE_ENGLISH, RE_ARABIC_NUM, RE_CN_NUM
+from .rules import merge_entities, RE_DATE, RE_ENGLISH, RE_ARABIC_NUM, RE_CN_NUM, RE_MIXED
+
+# 标点符号集合，用于长句分段
+SENTENCE_PUNCTUATION = set('，。！？；、：\n\r\t')
+CLAUSE_PUNCTUATION = set('，；、')
+
+
+def _segment_long_sentence(text: str, max_segment_len: int = 30) -> list[str]:
+    """
+    长句分段处理：将超长句子按标点切分为多个较短片段
+    
+    策略：
+    1. 优先在句子结束标点（。！？）处切分
+    2. 其次在分句标点（，；、）处切分
+    3. 最长不超过max_segment_len字符
+    """
+    if len(text) <= max_segment_len:
+        return [text]
+    
+    segments = []
+    start = 0
+    i = 0
+    
+    while i < len(text):
+        # 检查是否达到最大长度
+        if i - start >= max_segment_len:
+            # 在最大长度内寻找最近的标点
+            found = False
+            for j in range(i, max(start, i - 10), -1):
+                if text[j] in CLAUSE_PUNCTUATION:
+                    segments.append(text[start:j+1])
+                    start = j + 1
+                    i = start
+                    found = True
+                    break
+            if not found:
+                # 实在找不到标点，强制切分
+                segments.append(text[start:i])
+                start = i
+                i = start
+        
+        # 检查句子结束标点
+        if i < len(text) and text[i] in SENTENCE_PUNCTUATION:
+            segments.append(text[start:i+1])
+            start = i + 1
+            i = start
+        
+        i += 1
+    
+    # 添加剩余部分
+    if start < len(text):
+        segments.append(text[start:])
+    
+    return segments
 
 
 def _pre_extract_entities(sentence: str) -> list[tuple[str, str]]:
-    """Layer0 预处理：提取英文/数字/日期实体，返回[(类型, 文本), ...]"""
+    """Layer0 预处理：提取英文/数字/日期实体，返回[(类型, 文本), ...]
+    
+    规则优先级：日期 > 英文 > 阿拉伯数字 > 中文数字 > 混合实体
+    这样可以避免日期被混合实体规则错误匹配
+    """
     spans = []
-    for pat in (RE_DATE, RE_ENGLISH, RE_ARABIC_NUM, RE_CN_NUM):
+    # 按优先级顺序匹配，日期优先
+    for pat in (RE_DATE, RE_ENGLISH, RE_ARABIC_NUM, RE_CN_NUM, RE_MIXED):
         for m in pat.finditer(sentence):
             spans.append((m.start(), m.end()))
     
@@ -153,26 +211,35 @@ def hybrid_segment(
 ) -> list[str]:
     """
     新流程：
+    长句分段 - 将超长句子切分为较短片段
     Layer0：预处理 - 提取英文/数字/日期实体（保护不被BiMM切碎）
     Layer1：BiMM - 只处理剩余中文片段
     Layer2：HMM - 对连续未登录单字再切分
     Layer3：后处理 - 合并相邻实体
     """
-    # Layer0: 先用规则提取英文/数字/日期，得到span信息
-    segments = _pre_extract_entities(sentence)
+    # 长句分段预处理：避免超长句子导致的切分过碎问题
+    sentence_segments = _segment_long_sentence(sentence)
     
-    # Layer1+2: 对每个中文片段进行BiMM+HMM处理
-    refined: list[str] = []
-    for seg_type, seg_text in segments:
-        if seg_type == "entity":
-            refined.append(seg_text)  # 直接保留实体
-        else:
-            words = bimm(seg_text, dictionary, max_len)
-            # Layer2: HMM处理连续未登录单字
-            refined.extend(_layer2_process(words, dictionary, max_len, hmm_params))
+    # 对每个分段进行处理
+    final_result: list[str] = []
+    for seg in sentence_segments:
+        # Layer0: 先用规则提取英文/数字/日期，得到span信息
+        segments = _pre_extract_entities(seg)
+        
+        # Layer1+2: 对每个中文片段进行BiMM+HMM处理
+        refined: list[str] = []
+        for seg_type, seg_text in segments:
+            if seg_type == "entity":
+                refined.append(seg_text)  # 直接保留实体
+            else:
+                words = bimm(seg_text, dictionary, max_len)
+                # Layer2: HMM处理连续未登录单字
+                refined.extend(_layer2_process(words, dictionary, max_len, hmm_params))
+        
+        # Layer3: 后处理合并
+        final_result.extend(merge_entities(refined))
     
-    # Layer3: 后处理合并
-    return merge_entities(refined)
+    return final_result
 
 
 def fmm_with_spans(

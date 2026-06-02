@@ -1,1 +1,1 @@
-[2026-05-31 16:21:43] | PHASE=5 | TASK=hybrid_rules | Layer1=BiMM Layer2=HMM(>6字OOV) Layer3示例 | sentence=2024年12月31日DeepSeek发布大模型售价三千元 | result=['2024年12月31日', 'DeepSeek', '发布', '大模型', '售价', '三千', '元']
+[2026-06-02 17:14:34] | PHASE=5 | TASK=hybrid_rules | Layer1=BiMM Layer2=HMM(>6字OOV) Layer3示例 | sentence=2024年12月31日DeepSeek发布大模型售价三千元 | result=['2024年12月31日', 'DeepSeek', '发布', '大模型', '售价', '三千', '元']

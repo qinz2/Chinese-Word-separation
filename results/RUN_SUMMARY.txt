@@ -1,5 +1,5 @@
 # 实验运行摘要
-生成时间: 2026-05-31 16:21:51
+生成时间: 2026-06-02 17:14:43
 
 ## 数据资源
 - THUOCL: 6 个文件 -> THUOCL_animal.txt, THUOCL_caijing.txt, THUOCL_chengyu.txt, THUOCL_diming.txt, THUOCL_food.txt, THUOCL_it.txt
@@ -9,7 +9,7 @@
 - 合并词典规模: 96089 | MAX_LEN=7
 
 ## 关键指标（歧义集）
-- ambiguity | Hybrid | 5.8953 | 0.5000
+- ambiguity | Hybrid | 6.4643 | 0.5000
 - hybrid_jieba_win_rate = 0.0000
 - hybrid_minus_bimm_paired_win = -0.2000
 - bimm_agree_rate_ambiguity = 0.7000

@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 
-def bmm(sentence: str, dictionary: set[str], max_len: int) -> list[str]:
+def bmm(sentence: str, dictionary: dict[str, int], max_len: int) -> list[str]:
     result: list[str] = []
     index = len(sentence)
     while index > 0:

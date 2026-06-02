@@ -161,13 +161,13 @@ def benchmark_all() -> dict[str, Any]:
 
 def apply_baseline_compat(_params: dict[str, Any]) -> dict[str, Any]:
     """基线：仅用参考文档示例句估计的极小 HMM。"""
-    from .hmm import apply_add_one_smoothing, train_from_corpus
+    from .hmm import apply_delta_smoothing, train_from_corpus
 
     lines = [
         "我 来 到 北京 清华大学 学习 自然语言 处理",
         "自然 语言 处理",
     ]
-    return apply_add_one_smoothing(train_from_corpus(lines))
+    return apply_delta_smoothing(train_from_corpus(lines), delta=1.0)
 
 
 def _write_timing(stats: dict[str, Any]) -> None:
