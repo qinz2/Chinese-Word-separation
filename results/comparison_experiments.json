@@ -1,0 +1,583 @@
+[
+  {
+    "name": "delta_0.1",
+    "num_lines": 10000,
+    "delta": 0.1,
+    "stats": {
+      "timing": {
+        "basic": {
+          "FMM": 0.028975000077480217,
+          "BMM": 0.017549999938637484,
+          "BiMM": 0.028374999942570867,
+          "HMM_baseline": 0.7860250001385793,
+          "HMM_trained": 20.974200000068777,
+          "Hybrid": 1.5617249999877458
+        },
+        "ambiguity": {
+          "FMM": 0.03176500001700333,
+          "BMM": 0.022224999997888517,
+          "BiMM": 0.03816000000824715,
+          "HMM_baseline": 1.0937399999647823,
+          "HMM_trained": 32.816050000064934,
+          "Hybrid": 9.484059999908823
+        },
+        "oov": {
+          "FMM": 0.05193333324010988,
+          "BMM": 0.03233333333506986,
+          "BiMM": 109.89784666668736,
+          "HMM_baseline": 1.1150333333110514,
+          "HMM_trained": 22.274326666714234,
+          "Hybrid": 2.63782666664459
+        },
+        "long": {
+          "FMM": 0.1536100000521401,
+          "BMM": 0.12235999997756153,
+          "BiMM": 0.20791000001736393,
+          "HMM_baseline": 2.2825299998203263,
+          "HMM_trained": 35.89542000004258,
+          "Hybrid": 8.685299999933704
+        }
+      },
+      "jieba_agree": {
+        "basic": {
+          "FMM": 0.0,
+          "BMM": 0.25,
+          "BiMM": 0.25,
+          "HMM_baseline": 0.0,
+          "HMM_trained": 0.25,
+          "Hybrid": 0.25
+        },
+        "ambiguity": {
+          "FMM": 0.65,
+          "BMM": 0.7,
+          "BiMM": 0.7,
+          "HMM_baseline": 0.05,
+          "HMM_trained": 0.25,
+          "Hybrid": 0.5
+        },
+        "oov": {
+          "FMM": 0.0,
+          "BMM": 0.0,
+          "BiMM": 0.0,
+          "HMM_baseline": 0.06666666666666667,
+          "HMM_trained": 0.13333333333333333,
+          "Hybrid": 0.4
+        },
+        "long": {
+          "FMM": 0.0,
+          "BMM": 0.0,
+          "BiMM": 0.0,
+          "HMM_baseline": 0.0,
+          "HMM_trained": 0.1,
+          "Hybrid": 0.1
+        }
+      },
+      "hybrid_vs_bimm_ambiguity": {
+        "hybrid_jieba_win": 0.0,
+        "bimm_jieba_win": 0.2,
+        "tie": 0.8,
+        "bimm_agree_rate": 0.7,
+        "hybrid_agree_rate": 0.5,
+        "agree_rate_improvement": -0.19999999999999996
+      }
+    }
+  },
+  {
+    "name": "delta_0.5",
+    "num_lines": 10000,
+    "delta": 0.5,
+    "stats": {
+      "timing": {
+        "basic": {
+          "FMM": 0.02147499992588564,
+          "BMM": 0.014974999999139982,
+          "BiMM": 0.03750000007585186,
+          "HMM_baseline": 0.6971999997631428,
+          "HMM_trained": 28.650125000126536,
+          "Hybrid": 0.6666749999340027
+        },
+        "ambiguity": {
+          "FMM": 0.026760000014292018,
+          "BMM": 0.01893499993457226,
+          "BiMM": 0.027744999965761963,
+          "HMM_baseline": 0.7176449999178658,
+          "HMM_trained": 26.491284999974596,
+          "Hybrid": 6.570719999990615
+        },
+        "oov": {
+          "FMM": 0.053746666617371375,
+          "BMM": 0.03854000005958369,
+          "BiMM": 0.05927999991399702,
+          "HMM_baseline": 1.577173333286434,
+          "HMM_trained": 24.211613333439647,
+          "Hybrid": 2.454439999958898
+        },
+        "long": {
+          "FMM": 0.1226200000019162,
+          "BMM": 0.11196999998901447,
+          "BiMM": 0.36960999996153987,
+          "HMM_baseline": 2.5137199999790028,
+          "HMM_trained": 23.767069999985324,
+          "Hybrid": 7.544369999959599
+        }
+      },
+      "jieba_agree": {
+        "basic": {
+          "FMM": 0.0,
+          "BMM": 0.25,
+          "BiMM": 0.25,
+          "HMM_baseline": 0.0,
+          "HMM_trained": 0.25,
+          "Hybrid": 0.25
+        },
+        "ambiguity": {
+          "FMM": 0.65,
+          "BMM": 0.7,
+          "BiMM": 0.7,
+          "HMM_baseline": 0.05,
+          "HMM_trained": 0.25,
+          "Hybrid": 0.5
+        },
+        "oov": {
+          "FMM": 0.0,
+          "BMM": 0.0,
+          "BiMM": 0.0,
+          "HMM_baseline": 0.06666666666666667,
+          "HMM_trained": 0.13333333333333333,
+          "Hybrid": 0.4
+        },
+        "long": {
+          "FMM": 0.0,
+          "BMM": 0.0,
+          "BiMM": 0.0,
+          "HMM_baseline": 0.0,
+          "HMM_trained": 0.1,
+          "Hybrid": 0.1
+        }
+      },
+      "hybrid_vs_bimm_ambiguity": {
+        "hybrid_jieba_win": 0.0,
+        "bimm_jieba_win": 0.2,
+        "tie": 0.8,
+        "bimm_agree_rate": 0.7,
+        "hybrid_agree_rate": 0.5,
+        "agree_rate_improvement": -0.19999999999999996
+      }
+    }
+  },
+  {
+    "name": "delta_1.0",
+    "num_lines": 10000,
+    "delta": 1.0,
+    "stats": {
+      "timing": {
+        "basic": {
+          "FMM": 0.02612499997667328,
+          "BMM": 0.01900000006571645,
+          "BiMM": 0.024099999905047298,
+          "HMM_baseline": 1.094549999947958,
+          "HMM_trained": 20.068925000032323,
+          "Hybrid": 0.5750750000288463
+        },
+        "ambiguity": {
+          "FMM": 0.02443000000766915,
+          "BMM": 0.02160499998353771,
+          "BiMM": 0.028754999971170037,
+          "HMM_baseline": 0.5137499999818829,
+          "HMM_trained": 20.179795000035483,
+          "Hybrid": 5.606095000007372
+        },
+        "oov": {
+          "FMM": 0.04499999998491452,
+          "BMM": 0.040899999991476456,
+          "BiMM": 0.05976000005224099,
+          "HMM_baseline": 1.028726666603082,
+          "HMM_trained": 19.41671333333943,
+          "Hybrid": 2.3190466666771195
+        },
+        "long": {
+          "FMM": 0.12486999999055115,
+          "BMM": 0.08376000000680506,
+          "BiMM": 0.12529999999060237,
+          "HMM_baseline": 1.9089799999619572,
+          "HMM_trained": 22.98204000003352,
+          "Hybrid": 8.088270000052944
+        }
+      },
+      "jieba_agree": {
+        "basic": {
+          "FMM": 0.0,
+          "BMM": 0.25,
+          "BiMM": 0.25,
+          "HMM_baseline": 0.0,
+          "HMM_trained": 0.25,
+          "Hybrid": 0.25
+        },
+        "ambiguity": {
+          "FMM": 0.65,
+          "BMM": 0.7,
+          "BiMM": 0.7,
+          "HMM_baseline": 0.05,
+          "HMM_trained": 0.25,
+          "Hybrid": 0.5
+        },
+        "oov": {
+          "FMM": 0.0,
+          "BMM": 0.0,
+          "BiMM": 0.0,
+          "HMM_baseline": 0.06666666666666667,
+          "HMM_trained": 0.13333333333333333,
+          "Hybrid": 0.4
+        },
+        "long": {
+          "FMM": 0.0,
+          "BMM": 0.0,
+          "BiMM": 0.0,
+          "HMM_baseline": 0.0,
+          "HMM_trained": 0.1,
+          "Hybrid": 0.1
+        }
+      },
+      "hybrid_vs_bimm_ambiguity": {
+        "hybrid_jieba_win": 0.0,
+        "bimm_jieba_win": 0.2,
+        "tie": 0.8,
+        "bimm_agree_rate": 0.7,
+        "hybrid_agree_rate": 0.5,
+        "agree_rate_improvement": -0.19999999999999996
+      }
+    }
+  },
+  {
+    "name": "delta_2.0",
+    "num_lines": 10000,
+    "delta": 2.0,
+    "stats": {
+      "timing": {
+        "basic": {
+          "FMM": 0.025949999781005317,
+          "BMM": 0.013425000133793219,
+          "BiMM": 0.02095000002100278,
+          "HMM_baseline": 0.6333750000067084,
+          "HMM_trained": 21.024299999794493,
+          "Hybrid": 0.6274249999478343
+        },
+        "ambiguity": {
+          "FMM": 0.028379999957905966,
+          "BMM": 0.018719999957284017,
+          "BiMM": 0.028064999946764146,
+          "HMM_baseline": 0.6956449999734104,
+          "HMM_trained": 23.11095000000023,
+          "Hybrid": 6.8012450000424
+        },
+        "oov": {
+          "FMM": 0.044613333314676616,
+          "BMM": 0.0317666666887817,
+          "BiMM": 0.07733999991614837,
+          "HMM_baseline": 1.0111399999307953,
+          "HMM_trained": 20.21983333333992,
+          "Hybrid": 2.2978666667161938
+        },
+        "long": {
+          "FMM": 0.2178800000820047,
+          "BMM": 0.08800000000519503,
+          "BiMM": 0.15931999987515155,
+          "HMM_baseline": 1.4964200000122219,
+          "HMM_trained": 23.383990000093036,
+          "Hybrid": 8.259320000024672
+        }
+      },
+      "jieba_agree": {
+        "basic": {
+          "FMM": 0.0,
+          "BMM": 0.25,
+          "BiMM": 0.25,
+          "HMM_baseline": 0.0,
+          "HMM_trained": 0.25,
+          "Hybrid": 0.25
+        },
+        "ambiguity": {
+          "FMM": 0.65,
+          "BMM": 0.7,
+          "BiMM": 0.7,
+          "HMM_baseline": 0.05,
+          "HMM_trained": 0.25,
+          "Hybrid": 0.5
+        },
+        "oov": {
+          "FMM": 0.0,
+          "BMM": 0.0,
+          "BiMM": 0.0,
+          "HMM_baseline": 0.06666666666666667,
+          "HMM_trained": 0.13333333333333333,
+          "Hybrid": 0.4
+        },
+        "long": {
+          "FMM": 0.0,
+          "BMM": 0.0,
+          "BiMM": 0.0,
+          "HMM_baseline": 0.0,
+          "HMM_trained": 0.1,
+          "Hybrid": 0.1
+        }
+      },
+      "hybrid_vs_bimm_ambiguity": {
+        "hybrid_jieba_win": 0.0,
+        "bimm_jieba_win": 0.2,
+        "tie": 0.8,
+        "bimm_agree_rate": 0.7,
+        "hybrid_agree_rate": 0.5,
+        "agree_rate_improvement": -0.19999999999999996
+      }
+    }
+  },
+  {
+    "name": "corpus_5k",
+    "num_lines": 5000,
+    "delta": 0.1,
+    "stats": {
+      "timing": {
+        "basic": {
+          "FMM": 0.025199999868164014,
+          "BMM": 0.015124999890758772,
+          "BiMM": 0.025774999926397868,
+          "HMM_baseline": 0.635800000168274,
+          "HMM_trained": 18.494975000066916,
+          "Hybrid": 0.843600000052902
+        },
+        "ambiguity": {
+          "FMM": 0.024329999996552942,
+          "BMM": 0.017405000016879058,
+          "BiMM": 0.02489500000137923,
+          "HMM_baseline": 0.5820050000465926,
+          "HMM_trained": 18.227559999945697,
+          "Hybrid": 5.393174999971961
+        },
+        "oov": {
+          "FMM": 0.04502666670305189,
+          "BMM": 0.032933333386608865,
+          "BiMM": 0.051280000025144545,
+          "HMM_baseline": 0.9628666667595098,
+          "HMM_trained": 17.692886666706425,
+          "Hybrid": 2.2515999999692817
+        },
+        "long": {
+          "FMM": 0.11471000007077237,
+          "BMM": 0.09288000001106411,
+          "BiMM": 0.44569999995474063,
+          "HMM_baseline": 2.3071100000379374,
+          "HMM_trained": 22.84028999997645,
+          "Hybrid": 7.897879999927682
+        }
+      },
+      "jieba_agree": {
+        "basic": {
+          "FMM": 0.0,
+          "BMM": 0.25,
+          "BiMM": 0.25,
+          "HMM_baseline": 0.0,
+          "HMM_trained": 0.25,
+          "Hybrid": 0.25
+        },
+        "ambiguity": {
+          "FMM": 0.65,
+          "BMM": 0.7,
+          "BiMM": 0.7,
+          "HMM_baseline": 0.05,
+          "HMM_trained": 0.25,
+          "Hybrid": 0.55
+        },
+        "oov": {
+          "FMM": 0.0,
+          "BMM": 0.0,
+          "BiMM": 0.0,
+          "HMM_baseline": 0.06666666666666667,
+          "HMM_trained": 0.2,
+          "Hybrid": 0.4
+        },
+        "long": {
+          "FMM": 0.0,
+          "BMM": 0.0,
+          "BiMM": 0.0,
+          "HMM_baseline": 0.0,
+          "HMM_trained": 0.2,
+          "Hybrid": 0.1
+        }
+      },
+      "hybrid_vs_bimm_ambiguity": {
+        "hybrid_jieba_win": 0.0,
+        "bimm_jieba_win": 0.15,
+        "tie": 0.85,
+        "bimm_agree_rate": 0.7,
+        "hybrid_agree_rate": 0.55,
+        "agree_rate_improvement": -0.1499999999999999
+      }
+    }
+  },
+  {
+    "name": "corpus_10k",
+    "num_lines": 10000,
+    "delta": 0.1,
+    "stats": {
+      "timing": {
+        "basic": {
+          "FMM": 0.030049999963921437,
+          "BMM": 0.22037499991256482,
+          "BiMM": 0.05052500011970551,
+          "HMM_baseline": 0.7036750000679604,
+          "HMM_trained": 25.499874999923122,
+          "Hybrid": 0.9563749998733329
+        },
+        "ambiguity": {
+          "FMM": 0.02428500001769862,
+          "BMM": 0.039924999987306364,
+          "BiMM": 0.033309999957964465,
+          "HMM_baseline": 0.5873350000456412,
+          "HMM_trained": 20.16409499999554,
+          "Hybrid": 6.11910999994052
+        },
+        "oov": {
+          "FMM": 0.06082666680716405,
+          "BMM": 0.03824666664513643,
+          "BiMM": 0.06526000000424877,
+          "HMM_baseline": 2.0092399999460517,
+          "HMM_trained": 27.05243333330145,
+          "Hybrid": 2.8348333332966527
+        },
+        "long": {
+          "FMM": 0.1092299999527313,
+          "BMM": 0.0716799999736395,
+          "BiMM": 0.12786000006599352,
+          "HMM_baseline": 1.876730000049065,
+          "HMM_trained": 20.62157000004845,
+          "Hybrid": 7.043909999993048
+        }
+      },
+      "jieba_agree": {
+        "basic": {
+          "FMM": 0.0,
+          "BMM": 0.25,
+          "BiMM": 0.25,
+          "HMM_baseline": 0.0,
+          "HMM_trained": 0.25,
+          "Hybrid": 0.25
+        },
+        "ambiguity": {
+          "FMM": 0.65,
+          "BMM": 0.7,
+          "BiMM": 0.7,
+          "HMM_baseline": 0.05,
+          "HMM_trained": 0.25,
+          "Hybrid": 0.5
+        },
+        "oov": {
+          "FMM": 0.0,
+          "BMM": 0.0,
+          "BiMM": 0.0,
+          "HMM_baseline": 0.06666666666666667,
+          "HMM_trained": 0.13333333333333333,
+          "Hybrid": 0.4
+        },
+        "long": {
+          "FMM": 0.0,
+          "BMM": 0.0,
+          "BiMM": 0.0,
+          "HMM_baseline": 0.0,
+          "HMM_trained": 0.1,
+          "Hybrid": 0.1
+        }
+      },
+      "hybrid_vs_bimm_ambiguity": {
+        "hybrid_jieba_win": 0.0,
+        "bimm_jieba_win": 0.2,
+        "tie": 0.8,
+        "bimm_agree_rate": 0.7,
+        "hybrid_agree_rate": 0.5,
+        "agree_rate_improvement": -0.19999999999999996
+      }
+    }
+  },
+  {
+    "name": "corpus_20k",
+    "num_lines": 20000,
+    "delta": 0.1,
+    "stats": {
+      "timing": {
+        "basic": {
+          "FMM": 0.08559999992030498,
+          "BMM": 0.01759999997830164,
+          "BiMM": 0.02764999999271822,
+          "HMM_baseline": 1.6509499999983746,
+          "HMM_trained": 23.678250000102707,
+          "Hybrid": 0.6921249998868007
+        },
+        "ambiguity": {
+          "FMM": 0.02549500004533911,
+          "BMM": 0.01779500005341106,
+          "BiMM": 0.02456999998230458,
+          "HMM_baseline": 0.7438950000278055,
+          "HMM_trained": 21.918514999970284,
+          "Hybrid": 5.963130000031924
+        },
+        "oov": {
+          "FMM": 0.04597999995894497,
+          "BMM": 0.03384000004492312,
+          "BiMM": 0.05897999999433523,
+          "HMM_baseline": 0.8805000000090027,
+          "HMM_trained": 25.157833333408536,
+          "Hybrid": 2.4516933332355015
+        },
+        "long": {
+          "FMM": 0.09956999992937199,
+          "BMM": 0.0799500000084663,
+          "BiMM": 0.15094000013959885,
+          "HMM_baseline": 1.7283200000747456,
+          "HMM_trained": 33.2362699999976,
+          "Hybrid": 8.669530000088344
+        }
+      },
+      "jieba_agree": {
+        "basic": {
+          "FMM": 0.0,
+          "BMM": 0.25,
+          "BiMM": 0.25,
+          "HMM_baseline": 0.0,
+          "HMM_trained": 0.25,
+          "Hybrid": 0.25
+        },
+        "ambiguity": {
+          "FMM": 0.65,
+          "BMM": 0.7,
+          "BiMM": 0.7,
+          "HMM_baseline": 0.05,
+          "HMM_trained": 0.2,
+          "Hybrid": 0.55
+        },
+        "oov": {
+          "FMM": 0.0,
+          "BMM": 0.0,
+          "BiMM": 0.0,
+          "HMM_baseline": 0.06666666666666667,
+          "HMM_trained": 0.2,
+          "Hybrid": 0.4
+        },
+        "long": {
+          "FMM": 0.0,
+          "BMM": 0.0,
+          "BiMM": 0.0,
+          "HMM_baseline": 0.0,
+          "HMM_trained": 0.2,
+          "Hybrid": 0.1
+        }
+      },
+      "hybrid_vs_bimm_ambiguity": {
+        "hybrid_jieba_win": 0.0,
+        "bimm_jieba_win": 0.15,
+        "tie": 0.85,
+        "bimm_agree_rate": 0.7,
+        "hybrid_agree_rate": 0.55,
+        "agree_rate_improvement": -0.1499999999999999
+      }
+    }
+  }
+]

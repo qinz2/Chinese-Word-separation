@@ -1,3 +1,10 @@
 [2026-06-02 17:14:28] | PHASE=1 | TASK=build_dict | dict_base 生成完成 | 词数=95886 | 来源=['THUOCL:95886'] | 路径=E:\自然语言处理\大作业\data\dict\dict_base.txt
 [2026-06-02 17:14:30] | PHASE=1 | TASK=prepare_corpus | 训练语料 | 1998-01-2003版-带音.txt_random_sample n=10000 | 句数=10000 | 输出=E:\自然语言处理\大作业\data\corpus\train_corpus.txt
 [2026-06-02 17:14:32] | PHASE=1 | TASK=prepare_corpus | 训练语料 | 1998-01-2003版-带音.txt_random_sample n=10000 | 句数=10000 | 输出=E:\自然语言处理\大作业\data\corpus\train_corpus.txt
+[2026-06-03 20:50:07] | PHASE=1 | TASK=prepare_corpus | 训练语料 | 1998-01-2003版-带音.txt_random_sample n=10000 | 句数=10000 | 输出=E:\自然语言处理\大作业\data\corpus\train_corpus_delta_0.1.txt
+[2026-06-03 20:50:18] | PHASE=1 | TASK=prepare_corpus | 训练语料 | 1998-01-2003版-带音.txt_random_sample n=10000 | 句数=10000 | 输出=E:\自然语言处理\大作业\data\corpus\train_corpus_delta_0.5.txt
+[2026-06-03 20:50:25] | PHASE=1 | TASK=prepare_corpus | 训练语料 | 1998-01-2003版-带音.txt_random_sample n=10000 | 句数=10000 | 输出=E:\自然语言处理\大作业\data\corpus\train_corpus_delta_1.0.txt
+[2026-06-03 20:50:33] | PHASE=1 | TASK=prepare_corpus | 训练语料 | 1998-01-2003版-带音.txt_random_sample n=10000 | 句数=10000 | 输出=E:\自然语言处理\大作业\data\corpus\train_corpus_delta_2.0.txt
+[2026-06-03 20:50:40] | PHASE=1 | TASK=prepare_corpus | 训练语料 | 1998-01-2003版-带音.txt_random_sample n=5000 | 句数=5000 | 输出=E:\自然语言处理\大作业\data\corpus\train_corpus_corpus_5k.txt
+[2026-06-03 20:50:46] | PHASE=1 | TASK=prepare_corpus | 训练语料 | 1998-01-2003版-带音.txt_random_sample n=10000 | 句数=10000 | 输出=E:\自然语言处理\大作业\data\corpus\train_corpus_corpus_10k.txt
+[2026-06-03 20:50:53] | PHASE=1 | TASK=prepare_corpus | 训练语料 | 1998-01-2003版-带音.txt_random_sample n=20000 | 句数=19358 | 输出=E:\自然语言处理\大作业\data\corpus\train_corpus_corpus_20k.txt

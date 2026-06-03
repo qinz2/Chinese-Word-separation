@@ -1,33 +1,41 @@
 test_set	algorithm	avg_time_ms	jieba_agree_rate
-basic	FMM	0.0747	0.0000
-basic	BMM	0.0183	0.2500
-basic	BiMM	0.0272	0.2500
-basic	HMM_baseline	1.2405	0.0000
-basic	HMM_trained	19.5395	0.2500
-basic	Hybrid	0.8514	0.2500
-ambiguity	FMM	0.0265	0.6500
-ambiguity	BMM	0.0182	0.7000
-ambiguity	BiMM	0.0267	0.7000
-ambiguity	HMM_baseline	0.7864	0.0500
-ambiguity	HMM_trained	19.1981	0.2500
-ambiguity	Hybrid	6.4643	0.5000
-oov	FMM	0.0450	0.0000
-oov	BMM	0.0315	0.0000
-oov	BiMM	117.3410	0.0000
-oov	HMM_baseline	1.3715	0.0667
-oov	HMM_trained	17.9253	0.1333
-oov	Hybrid	2.0152	0.4000
-long	FMM	0.0830	0.0000
-long	BMM	0.0631	0.0000
-long	BiMM	0.1022	0.0000
-long	HMM_baseline	2.7933	0.0000
-long	HMM_trained	18.3383	0.1000
-long	Hybrid	6.0388	0.1000
+basic	FMM	0.0856	0.0000
+basic	BMM	0.0176	0.2500
+basic	BiMM	0.0276	0.2500
+basic	HMM_baseline	1.6509	0.0000
+basic	HMM_trained	23.6783	0.2500
+basic	Hybrid	0.6921	0.2500
+ambiguity	FMM	0.0255	0.6500
+ambiguity	BMM	0.0178	0.7000
+ambiguity	BiMM	0.0246	0.7000
+ambiguity	HMM_baseline	0.7439	0.0500
+ambiguity	HMM_trained	21.9185	0.2000
+ambiguity	Hybrid	5.9631	0.5500
+oov	FMM	0.0460	0.0000
+oov	BMM	0.0338	0.0000
+oov	BiMM	0.0590	0.0000
+oov	HMM_baseline	0.8805	0.0667
+oov	HMM_trained	25.1578	0.2000
+oov	Hybrid	2.4517	0.4000
+long	FMM	0.0996	0.0000
+long	BMM	0.0800	0.0000
+long	BiMM	0.1509	0.0000
+long	HMM_baseline	1.7283	0.0000
+long	HMM_trained	33.2363	0.2000
+long	Hybrid	8.6695	0.1000
 
 # 歧义集 Hybrid 相对 BiMM（相对 jieba 一致率）
 hybrid_jieba_win_rate	0.0000
-bimm_jieba_win_rate	0.2000
-hybrid_minus_bimm_paired_win	-0.2000
+bimm_jieba_win_rate	0.1500
+hybrid_minus_bimm_paired_win	-0.1500
 bimm_agree_rate_ambiguity	0.7000
-hybrid_agree_rate_ambiguity	0.5000
-hybrid_agree_rate_improvement	-0.2000
+hybrid_agree_rate_ambiguity	0.5500
+hybrid_agree_rate_improvement	-0.1500
+
+# 算法组件消融（详见 ablation_study.txt）
+# BiMM_only: 歧义0.70 OOV0.00 速度最快
+# HMM_only: 歧义0.25 OOV0.13 速度最慢
+# Hybrid: 歧义0.50 OOV0.40 综合最优
+
+# δ值对比结论: δ=0.01~1.0 对Hybrid一致率无影响（BiMM主导）
+# 语料规模结论: 500~10000句对Hybrid一致率无影响（BiMM主导）

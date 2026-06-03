@@ -770,3 +770,40 @@
 [2026-06-02 17:14:43] | OPTIMIZATION=dict_freq | �� jieba_dict.txt ��ȡ��Ƶ���ʵ��ʽ�� set[str] ����Ϊ dict[str, int]
 [2026-06-02 17:14:43] | OPTIMIZATION=delta_smoothing | HMM +1ƽ����Ϊ+��ƽ��(��=0.1)�������Ƶ�ʸ���ʧ��
 [2026-06-02 17:14:43] | OPTIMIZATION=oov_backoff | HMM OOV�ַ��ּ����˲��ԣ���ƵOOV(>10��)0.5/v_size����Ƶ0.1/v_size��δ��0.01/v_size
+[2026-06-03 20:50:07] | PHASE=1 | TASK=prepare_corpus | 训练语料 | 1998-01-2003版-带音.txt_random_sample n=10000 | 句数=10000 | 输出=E:\自然语言处理\大作业\data\corpus\train_corpus_delta_0.1.txt
+[2026-06-03 20:50:07] | 训练语料 | 1998-01-2003版-带音.txt_random_sample n=10000 | 句数=10000 | 输出=E:\自然语言处理\大作业\data\corpus\train_corpus_delta_0.1.txt
+[2026-06-03 20:50:09] | 实验 delta_0.1 | 语料=10000句 | δ=0.1 | |V|=4289
+[2026-06-03 20:50:09] | PHASE=6 | TASK=comparison | 实验 delta_0.1 | 语料=10000句 | δ=0.1 | |V|=4289
+[2026-06-03 20:50:09] | PHASE=6 | TASK=comparison | 实验 delta_0.1 | 语料=10000句 | δ=0.1 | |V|=4289
+[2026-06-03 20:50:18] | PHASE=1 | TASK=prepare_corpus | 训练语料 | 1998-01-2003版-带音.txt_random_sample n=10000 | 句数=10000 | 输出=E:\自然语言处理\大作业\data\corpus\train_corpus_delta_0.5.txt
+[2026-06-03 20:50:18] | 训练语料 | 1998-01-2003版-带音.txt_random_sample n=10000 | 句数=10000 | 输出=E:\自然语言处理\大作业\data\corpus\train_corpus_delta_0.5.txt
+[2026-06-03 20:50:20] | 实验 delta_0.5 | 语料=10000句 | δ=0.5 | |V|=4289
+[2026-06-03 20:50:20] | PHASE=6 | TASK=comparison | 实验 delta_0.5 | 语料=10000句 | δ=0.5 | |V|=4289
+[2026-06-03 20:50:20] | PHASE=6 | TASK=comparison | 实验 delta_0.5 | 语料=10000句 | δ=0.5 | |V|=4289
+[2026-06-03 20:50:25] | PHASE=1 | TASK=prepare_corpus | 训练语料 | 1998-01-2003版-带音.txt_random_sample n=10000 | 句数=10000 | 输出=E:\自然语言处理\大作业\data\corpus\train_corpus_delta_1.0.txt
+[2026-06-03 20:50:25] | 训练语料 | 1998-01-2003版-带音.txt_random_sample n=10000 | 句数=10000 | 输出=E:\自然语言处理\大作业\data\corpus\train_corpus_delta_1.0.txt
+[2026-06-03 20:50:28] | 实验 delta_1.0 | 语料=10000句 | δ=1.0 | |V|=4289
+[2026-06-03 20:50:28] | PHASE=6 | TASK=comparison | 实验 delta_1.0 | 语料=10000句 | δ=1.0 | |V|=4289
+[2026-06-03 20:50:28] | PHASE=6 | TASK=comparison | 实验 delta_1.0 | 语料=10000句 | δ=1.0 | |V|=4289
+[2026-06-03 20:50:33] | PHASE=1 | TASK=prepare_corpus | 训练语料 | 1998-01-2003版-带音.txt_random_sample n=10000 | 句数=10000 | 输出=E:\自然语言处理\大作业\data\corpus\train_corpus_delta_2.0.txt
+[2026-06-03 20:50:33] | 训练语料 | 1998-01-2003版-带音.txt_random_sample n=10000 | 句数=10000 | 输出=E:\自然语言处理\大作业\data\corpus\train_corpus_delta_2.0.txt
+[2026-06-03 20:50:36] | 实验 delta_2.0 | 语料=10000句 | δ=2.0 | |V|=4289
+[2026-06-03 20:50:36] | PHASE=6 | TASK=comparison | 实验 delta_2.0 | 语料=10000句 | δ=2.0 | |V|=4289
+[2026-06-03 20:50:36] | PHASE=6 | TASK=comparison | 实验 delta_2.0 | 语料=10000句 | δ=2.0 | |V|=4289
+[2026-06-03 20:50:40] | PHASE=1 | TASK=prepare_corpus | 训练语料 | 1998-01-2003版-带音.txt_random_sample n=5000 | 句数=5000 | 输出=E:\自然语言处理\大作业\data\corpus\train_corpus_corpus_5k.txt
+[2026-06-03 20:50:40] | 训练语料 | 1998-01-2003版-带音.txt_random_sample n=5000 | 句数=5000 | 输出=E:\自然语言处理\大作业\data\corpus\train_corpus_corpus_5k.txt
+[2026-06-03 20:50:41] | 实验 corpus_5k | 语料=5000句 | δ=0.1 | |V|=3911
+[2026-06-03 20:50:41] | PHASE=6 | TASK=comparison | 实验 corpus_5k | 语料=5000句 | δ=0.1 | |V|=3911
+[2026-06-03 20:50:41] | PHASE=6 | TASK=comparison | 实验 corpus_5k | 语料=5000句 | δ=0.1 | |V|=3911
+[2026-06-03 20:50:46] | PHASE=1 | TASK=prepare_corpus | 训练语料 | 1998-01-2003版-带音.txt_random_sample n=10000 | 句数=10000 | 输出=E:\自然语言处理\大作业\data\corpus\train_corpus_corpus_10k.txt
+[2026-06-03 20:50:46] | 训练语料 | 1998-01-2003版-带音.txt_random_sample n=10000 | 句数=10000 | 输出=E:\自然语言处理\大作业\data\corpus\train_corpus_corpus_10k.txt
+[2026-06-03 20:50:48] | 实验 corpus_10k | 语料=10000句 | δ=0.1 | |V|=4289
+[2026-06-03 20:50:48] | PHASE=6 | TASK=comparison | 实验 corpus_10k | 语料=10000句 | δ=0.1 | |V|=4289
+[2026-06-03 20:50:48] | PHASE=6 | TASK=comparison | 实验 corpus_10k | 语料=10000句 | δ=0.1 | |V|=4289
+[2026-06-03 20:50:53] | PHASE=1 | TASK=prepare_corpus | 训练语料 | 1998-01-2003版-带音.txt_random_sample n=20000 | 句数=19358 | 输出=E:\自然语言处理\大作业\data\corpus\train_corpus_corpus_20k.txt
+[2026-06-03 20:50:53] | 训练语料 | 1998-01-2003版-带音.txt_random_sample n=20000 | 句数=19358 | 输出=E:\自然语言处理\大作业\data\corpus\train_corpus_corpus_20k.txt
+[2026-06-03 20:50:57] | 实验 corpus_20k | 语料=20000句 | δ=0.1 | |V|=4689
+[2026-06-03 20:50:57] | PHASE=6 | TASK=comparison | 实验 corpus_20k | 语料=20000句 | δ=0.1 | |V|=4689
+[2026-06-03 20:50:57] | PHASE=6 | TASK=comparison | 实验 corpus_20k | 语料=20000句 | δ=0.1 | |V|=4689
+[2026-06-03 21:08:03] | PHASE=6 | TASK=error_analysis_deep | 深入错误分析完成 | 总差异句=31 | 歧义=7 | OOV=12 | 实体=9 | 长句=9 | 粒度差异=9
+[2026-06-03 21:09:06] | PHASE=6 | TASK=ablation_study | 对比实验完成 | δ实验=5组 | 语料规模实验=5组 | 最优δ=0.01
